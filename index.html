@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Jumpy</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="video" autoplay>
+    <source src="mirvas.mp4" type="video/mp4">
+    Video no on ur device!!!.
+  </video>
+
+  <script>
+    const video = document.getElementById('video');
+
+    // Asegura que el video no esté en mute
+    video.muted = false;
+
+    // Intenta reproducir al cargar la página
+    window.addEventListener('load', () => {
+      video.play().catch((err) => {
+        console.warn("No se pudo reproducir automáticamente. El navegador puede requerir interacción del usuario.");
+        console.error(err);
+      });
+    });
+  </script>
+
+</body>
+</html>
