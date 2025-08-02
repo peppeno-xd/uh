@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jumpy</title>
+  <title>Marv</title>
   <style>
     html, body {
       margin: 0;
@@ -12,33 +12,64 @@
       overflow: hidden;
     }
 
-    video {
+    #video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      display: none;
+    }
+
+    #startButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      background: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
 
-  <video id="video" autoplay>
+  <button id="startButton">Click here for a surprise</button>
+  <video id="video">
     <source src="mirvas.mp4" type="video/mp4">
-    Video no on ur device!!!.
+    Wait ur browser dont support awehdsh.
   </video>
 
   <script>
+    const button = document.getElementById('startButton');
     const video = document.getElementById('video');
 
-    // Asegura que el video no esté en mute
-    video.muted = false;
+    button.addEventListener('click', async () => {
+      button.style.display = 'none';
+      video.style.display = 'block';
+      video.muted = false;
 
-    // Intenta reproducir al cargar la página
-    window.addEventListener('load', () => {
-      video.play().catch((err) => {
-        console.warn("No se pudo reproducir automáticamente. El navegador puede requerir interacción del usuario.");
+      try {
+        await video.play();
+
+        const requestFullScreen = video.requestFullscreen ||
+                                  video.webkitRequestFullscreen ||
+                                  video.mozRequestFullScreen ||
+                                  video.msRequestFullscreen;
+        if (requestFullScreen) {
+          requestFullScreen.call(video);
+        }
+
+      } catch (err) {
+        alert("FUCK: " + err.message);
         console.error(err);
-      });
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      window.location.href = "https://google.com/";
     });
   </script>
 
